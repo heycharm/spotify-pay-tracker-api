@@ -9,8 +9,9 @@
   },
   "scripts": {
     "node server": "npm start",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
   }
 }
