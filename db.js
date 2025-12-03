@@ -1,19 +1,12 @@
-import mysql from "mysql2";
+import pkg from "pg";
 import dotenv from "dotenv";
-
 dotenv.config();
 
-// const db = mysql.createPool({
-//   host: "localhost",
-//   user: "root",
-//   password: process.env.DB_PASS,
-//   database: "spotify_pay_tracker",
-// });
-const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+const { Pool } = pkg;
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
 });
 
-export default db;
+export default pool;

@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import cron from "node-cron";   
+import cron from "node-cron";
 import userRoutes from "./userRoutes.js";
-import { renewMonth } from "./userController.js";   
+import { renewMonth } from "./userController.js";
 
 dotenv.config();
 
@@ -11,12 +11,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root route
 app.get("/", (req, res) => {
   res.send("API IS RUNNING ✅");
 });
 
+// Routes
 app.use("/", userRoutes);
 
+
+// Cron job for 1st of every month at 9 AM IST
 cron.schedule(
   "0 9 1 * *",
   () => {
@@ -37,10 +41,12 @@ cron.schedule(
   },
   {
     scheduled: true,
-    timezone: "Asia/Kolkata", 
+    timezone: "Asia/Kolkata",
   }
 );
 
-app.listen(5000, "0.0.0.0", () => {
-  console.log("API IS RUNNING ");
+// Render-friendly port
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`API is running on port ${PORT}`);
 });
